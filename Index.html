@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Clinical Decision Support System</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            flex-grow: 1;
+            text-align: center;
+        }
+        main {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+            padding: 20px;
+        }
+        .chat-container {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        #chatbox {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            font-size: 16px;
+        }
+        .input-area {
+            display: flex;
+            padding: 20px;
+            background-color: #ecf0f1;
+        }
+        #userInput {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #3498db;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+        #sendBtn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 0 5px 5px 0;
+        }
+        #sendBtn:hover {
+            background-color: #2980b9;
+        }
+        .info-panel {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            max-width: 80%;
+        }
+        .user-message {
+            background-color: #3498db;
+            color: white;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #ecf0f1;
+            align-self: flex-start;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        .btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #27ae60;
+        }
+        #homeBtn {
+            background-color: #3498db;
+        }
+        #homeBtn:hover {
+            background-color: #2980b9;
+        }
+        #resetBtn {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button id="homeBtn" class="btn">Home</button>
+            <div class="header-title">AI-Powered Clinical Decision Support System</div>
+        </header>
+        <main>
+            <div class="chat-container">
+                <div id="chatbox"></div>
+                <div class="input-area">
+                    <input type="text" id="userInput" placeholder="Describe your symptoms here...">
+                    <button id="sendBtn">Send</button>
+                </div>
+            </div>
+            <div class="info-panel">
+                <h2>How to Use</h2>
+                <p>Welcome to the AI-Powered Clinical Decision Support System. This chatbot can:</p>
+                <ul>
+                    <li>Welcome you</li>
+                    <li>Predict diseases based on your symptoms</li>
+                    <li>Suggest possible solutions and recommendations</li>
+                    <li>Bid you farewell</li>
+                </ul>
+                <p><strong>How to Start:</strong> Simply type your symptoms in the textbox and press enter or click Send!</p>
+                <p>The AI will respond with a possible diagnosis and advice. Please note that this is a demonstration and should not replace professional medical advice.</p>
+                <button id="resetBtn" class="btn">Reset Conversation</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatbox = document.getElementById('chatbox');
+            const userInput = document.getElementById('userInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const homeBtn = document.getElementById('homeBtn');
+            const resetBtn = document.getElementById('resetBtn');
+
+            let chatHistory = [];
+
+            function addMessage(message, isUser = false) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+                messageElement.textContent = message;
+                chatbox.appendChild(messageElement);
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }
+
+            function sendMessage() {
+                const message = userInput.value.trim();
+                if (message) {
+                    addMessage(message, true);
+                    userInput.value = '';
+
+                    // Find the Gradio textbox and button elements
+                    const gradioTextbox = document.querySelector('#component-3');
+                    const gradioButton = document.querySelector('#component-4');
+
+                    // Set the value of the Gradio textbox
+                    gradioTextbox.value = message;
+
+                    // Trigger a click on the Gradio button
+                    gradioButton.click();
+
+                    // Wait for the response
+                    const observer = new MutationObserver((mutations) => {
+                        mutations.forEach((mutation) => {
+                            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                                const addedNode = mutation.addedNodes[0];
+                                if (addedNode.nodeType === Node.ELEMENT_NODE && addedNode.classList.contains('message')) {
+                                    const botResponse = addedNode.textContent;
+                                    addMessage(botResponse);
+                                    observer.disconnect();
+                                }
+                            }
+                        });
+                    });
+
+                    observer.observe(document.querySelector('#chatbot'), { childList: true, subtree: true });
+                }
+            }
+
+            function resetConversation() {
+                chatbox.innerHTML = '';
+                chatHistory = [];
+                addMessage("Welcome to the AI-Powered Clinical Decision Support System. How can I assist you today?");
+
+                // Clear the Gradio chatbot
+                const gradioClearButton = document.querySelector('#component-5');
+                gradioClearButton.click();
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            homeBtn.addEventListener('click', resetConversation);
+            resetBtn.addEventListener('click', resetConversation);
+
+            // Initial greeting
+            addMessage("Welcome to the AI-Powered Clinical Decision Support System. How can I assist you today?");
+
+            // Hide the original Gradio interface
+            const gradioApp = document.querySelector('gradio-app');
+            gradioApp.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

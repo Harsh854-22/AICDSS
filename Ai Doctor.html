@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AICDSS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #710d2f, #1f2251);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #333;
+            padding: 10px 20px;
+            text-align: left;
+            z-index: 10;
+            animation: slideDown 1s ease-in-out;
+        }
+
+        header h1 {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            height: 100%;
+            z-index: 5;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .content {
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100px); }
+            to { transform: translateY(0); }
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle at 50% 50%, #66d1ff, #d657ff);
+            border-radius: 50%;
+            position: absolute;
+            top: -50px;
+            left: -100px;
+            animation: move 10s infinite alternate ease-in-out;
+            background: transparent; /* Makes the background of the circle transparent */
+            border: 2px solid #66d1ff; /* Adds a border if needed */
+        }
+
+        .small-circle {
+            width: 20px;
+            height: 20px;
+            background-color: #ff4c4c;
+            border-radius: 50%;
+            position: absolute;
+            top: 200px;
+            right: 200px;
+            animation: moveSmall 12s infinite alternate ease-in-out;
+        }
+
+        .pill {
+            width: 60px;
+            height: 30px;
+            background: radial-gradient(circle at 50% 50%, #fffc00, #ff7e00);
+            border-radius: 50%;
+            position: absolute;
+            bottom: -20px;
+            right: -50px;
+            transform: rotate(25deg);
+            animation: movePill 8s infinite alternate ease-in-out;
+        }
+
+        @keyframes move {
+            from { transform: translateX(0) translateY(0); }
+            to { transform: translateX(200px) translateY(100px); }
+        }
+
+        @keyframes moveSmall {
+            from { transform: translateX(0) translateY(0); }
+            to { transform: translateX(-100px) translateY(-50px); }
+        }
+
+        @keyframes movePill {
+            from { transform: rotate(25deg) translateX(0) translateY(0); }
+            to { transform: rotate(-25deg) translateX(-100px) translateY(50px); }
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #f8f8f8;
+            animation: textGlow 2s infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px #f8f8f8; }
+            to { text-shadow: 0 0 20px #ffca2c; }
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #f1a10a;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #f1a10a;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+            animation: pulse 2s infinite alternate;
+        }
+
+        .btn:hover {
+            background-color: #ffca2c;
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        .interactive-circle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff4c4c;
+            border-radius: 50%;
+            z-index: 1;
+            animation: bounce 6s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-50px); }
+        }
+
+        /* Repel effect for the big circle */
+        .circle.repel {
+            animation: none;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .circle:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            border-color: #ffca2c; /* Border color change on hover */
+        }
+
+        /* Particle Effect */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f1a10a;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: float 4s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0.8; }
+            50% { transform: translateY(-50px); opacity: 0.4; }
+            100% { transform: translateY(0); opacity: 0.8; }
+        }
+
+        /* Doctor tools */
+        .tool {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: toolMove 10s infinite alternate ease-in-out;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .tool:hover {
+            transform: scale(1.3) rotate(15deg);
+        }
+
+        @keyframes toolMove {
+            from { transform: translateX(0) translateY(0); }
+            to { transform: translateX(100px) translateY(50px); }
+        }
+
+        .stethoscope {
+            background-image: url('image/stethoscope.png');
+            top: 100px;
+            left: 50px;
+            width: 100px;
+            height: 100px;
+            animation-duration: 12s;
+        }
+
+        .syringe {
+            background-image: url('image/syringe.png');
+            bottom: 100px;
+            left: 700px;
+            width: 90px;
+            height: 90px;
+            background-size: cover;
+            animation-duration: 14s;
+        }
+
+        .pill-bottle {
+            background-image: url('image/pill-bottle.png');
+            bottom: 100px;
+            right: 100px;
+            width: 90px;
+            height: 90px;
+            animation-duration: 16s;
+        }
+        .thermometer {
+    background-image: url('image/thermometer.png');
+    top: 100px;
+    left: 1300px;
+    width: 80px;
+    height: 150px;
+    animation-duration: 12s;
+}
+
+.medicine {
+    background-image: url('image/medicine.png');
+    top: 300px;
+    left: 100px;
+    width: 100px;
+    height: 60px;
+    animation-duration: 14s;
+}
+.scalpel {
+    background-image: url('image/scalpel.png');
+    top: 300px;
+    right: 200px;
+    width: 150px;
+    height: 100px;
+    animation-duration: 18s;
+}
+
+.gloves {
+    background-image: url('image/gloves.png');
+    bottom: 100px;
+    left: 200px;
+    width: 80px;
+    height: 70px;
+    animation-duration: 20s;
+}
+.bandage {
+    background-image: url('image/bandage.png');
+    top: 70px;
+    left: 700px;
+    width: 90px;
+    height: 50px;
+    animation-duration: 14s;
+}
+.tool{
+    filter: drop-shadow(1px 1px 2px rgb(84, 172, 79));
+}
+/*
+.x-ray {
+    background-image: url('image/x-ray.png');
+    top: 550px;
+    left: 900px;
+    width: 150px;
+    height: 150px;
+    animation-duration: 14s;
+}
+    */
+
+    </style>
+</head>
+<body>
+    
+    <main>
+        <div class="content">
+            <div class="circle"></div>
+            <h2>Welcome to AICDSS</h2> 
+            <p>Your virtual assistant for medical information and guidance.</p>
+            <a href="Tabs/AI Doctor.html" class="btn">Let's Start</a>
+            <div class="circle small-circle"></div>
+            <div class="pill"></div>
+        </div>
+    </main>
+    <div class="interactive-circle"></div>
+
+    <!-- Doctor Tools -->
+    <div class="tool stethoscope"></div>
+    <div class="tool syringe"></div>
+    <div class="tool pill-bottle"></div>
+    <div class="tool medicine"></div>
+    <div class="tool thermometer"></div>
+    <div class="tool scalpel"></div>
+    <div class="tool gloves"></div>
+    <div class="tool x-ray"></div>
+    <div class="tool bandage "></div>
+
+    
+    <script>
+        // Move the interactive circle based on mouse movement
+        document.addEventListener('mousemove', (e) => {
+            const circle = document.querySelector('.interactive-circle');
+            circle.style.left = `${e.clientX - 25}px`;
+            circle.style.top = `${e.clientY - 25}px`;
+        });
+
+        // Add a click event to change the circle's color
+        document.querySelector('.interactive-circle').addEventListener('click', () => {
+            const circle = document.querySelector('.interactive-circle');
+            const colors = ['#ff4c4c', '#66d1ff', '#ffca2c', '#ff7e00'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            circle.style.backgroundColor = randomColor;
+        });
+
+        // Adding hover effect for doctor tools
+        const tools = document.querySelectorAll('.tool');
+        tools.forEach(tool => {
+            tool.addEventListener('mouseenter', () => {
+                tool.style.transform = 'scale(1.3) rotate(15deg)';
+            });
+            tool.addEventListener('mouseleave', () => {
+                tool.style.transform = 'scale(1) rotate(0)';
+            });
+        });
+    </script>
+</body>
+</html>
