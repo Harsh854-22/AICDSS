@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Check-in</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+    background: url('https://images.unsplash.com/photo-1483645688838-91f92e67d8f4?fit=crop&w=1200&h=800') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.card {
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+h1:hover {
+    color: #00bfff;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.response {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #00bfff;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.btn {
+    padding: 12px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card mx-auto shadow-lg" style="max-width: 800px;">
+            <div class="card-body">
+                <h1 class="text-center mb-4">Mental Health Check-in</h1>
+                <form id="mentalHealthForm">
+                    <div class="mb-3">
+                        <label for="mood" class="form-label">How are you feeling today?</label>
+                        <select class="form-select" id="mood">
+                            <option value="" disabled selected>Select your mood</option>
+                            <option value="1">Very Low</option>
+                            <option value="2">Low</option>
+                            <option value="3">Neutral</option>
+                            <option value="4">Good</option>
+                            <option value="5">Very Good</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stressLevel" class="form-label">How stressed do you feel?</label>
+                        <select class="form-select" id="stressLevel">
+                            <option value="" disabled selected>Select stress level</option>
+                            <option value="1">Not at all stressed</option>
+                            <option value="2">Slightly stressed</option>
+                            <option value="3">Moderately stressed</option>
+                            <option value="4">Very stressed</option>
+                            <option value="5">Extremely stressed</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sleepQuality" class="form-label">How would you rate your sleep quality this week?</label>
+                        <select class="form-select" id="sleepQuality">
+                            <option value="" disabled selected>Select rating</option>
+                            <option value="1">Very Poor</option>
+                            <option value="2">Poor</option>
+                            <option value="3">Average</option>
+                            <option value="4">Good</option>
+                            <option value="5">Excellent</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary w-100" onclick="checkIn()">Submit</button>
+                </form>
+                <div id="response" class="mt-4 text-center response"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function checkIn() {
+    const mood = document.getElementById('mood').value;
+    const stressLevel = document.getElementById('stressLevel').value;
+    const sleepQuality = document.getElementById('sleepQuality').value;
+    const response = document.getElementById('response');
+
+    if (!mood || !stressLevel || !sleepQuality) {
+        response.innerHTML = "Please answer all the questions!";
+        response.style.color = 'red';
+        return;
+    }
+
+    let message = "";
+    let advice = "";
+    const quotes = [
+        "You are stronger than you think.",
+        "Every day is a fresh start.",
+        "Believe you can and you're halfway there.",
+        "You have the power to create change.",
+        "Don't watch the clock; do what it does. Keep going."
+    ];
+
+    const exercises = [
+        "Take a deep breath: Inhale for 4 seconds, hold for 7 seconds, and exhale for 8 seconds.",
+        "Practice progressive muscle relaxation: Tense and then relax each muscle group in your body.",
+        "Take a 5-minute walk outside to clear your mind.",
+        "Listen to calming music or nature sounds for relaxation.",
+        "Write down three things you're grateful for today."
+    ];
+
+    const activities = [
+        "Read a book or listen to an audiobook.",
+        "Practice mindfulness or meditation for 10 minutes.",
+        "Engage in a hobby you love, like painting or cooking.",
+        "Call or text a friend or family member for a quick chat.",
+        "Watch a movie or show that makes you laugh."
+    ];
+
+    const averageMood = (parseInt(mood) + parseInt(stressLevel) + parseInt(sleepQuality)) / 3;
+
+    if (averageMood <= 2) {
+        message = "It looks like you might be feeling overwhelmed. Here are some ways to improve your mood:";
+        advice = quotes[Math.floor(Math.random() * quotes.length)];
+    } else if (averageMood <= 3) {
+        message = "You seem to be managing okay. Consider trying these activities to enhance your well-being:";
+        advice = exercises[Math.floor(Math.random() * exercises.length)];
+    } else {
+        message = "You're feeling great! To maintain this positivity, try engaging in these activities:";
+        advice = activities[Math.floor(Math.random() * activities.length)];
+    }
+
+    response.style.color = '#00bfff';
+    response.innerHTML = `<p><strong>${message}</strong></p><p>${advice}</p>`;
+}
+
+    </script>
+</body>
+</html>

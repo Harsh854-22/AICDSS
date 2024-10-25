@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Diseases</title>
+    <style>
+        body {
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #333;
+            color: #f4f4f9;
+        }
+
+        .most {
+            height: 40px;
+            width: 100%;
+            color: red;
+            font-size: 2em;
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .main {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 10px;
+        }
+
+        .row1, .row2 {
+            width: 100%;
+            max-width: 260px;
+            padding: 10px;
+            font-size: 1em;
+            background-color: #eee;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+
+        }
+        .row1:hover, .row2:hover {
+            background-color: #dcdcdc;
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .name {
+            color: violet;
+            font-size: 1.5em;
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+        }
+
+        body.dark-mode .row1, body.dark-mode .row2 {
+            background-color: #555;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            border-color: #666;
+            outline: none;
+        }
+
+        #themeToggle {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #333;
+            color: #f4f4f9;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #themeToggle.dark-mode {
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        footer {
+            background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .name {
+                font-size: 1.2em;
+            }
+            #searchInput {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .name {
+                font-size: 1em;
+            }
+            #searchInput {
+                max-width: 200px;
+            }
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            #themeToggle {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="most">Most Common Diseases</div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search diseases..." oninput="filterCards()">
+        <button id="themeToggle" onclick="toggleTheme()">Switch to Dark Mode</button>
+    </div>
+
+    <div class="main" id="diseaseList">
+        <div class="row1">
+            <div class="name">Malaria</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Antimalarial drugs (e.g., Chloroquine, Artemisinin)</p>
+                <p><strong>Diet:</strong> High-calorie diet with plenty of fluids and nutrients</p>
+                <p><strong>Exercise:</strong> Light exercises like walking and stretching</p>
+                <p><strong>Yoga:</strong> Pranayama (breathing exercises), relaxation techniques</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Diabetes</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Insulin, Metformin, Sulfonylureas</p>
+                <p><strong>Diet:</strong> Low-carb, high-fiber diet; monitor sugar intake</p>
+                <p><strong>Exercise:</strong> Regular aerobic exercises (e.g., walking, cycling)</p>
+                <p><strong>Yoga:</strong> Surya Namaskar, Bhujangasana, Dhanurasana</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Kidney Diseases</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> ACE inhibitors, diuretics, antibiotics</p>
+                <p><strong>Diet:</strong> Low-sodium, low-protein diet; adequate hydration</p>
+                <p><strong>Exercise:</strong> Light to moderate exercises (e.g., walking, swimming)</p>
+                <p><strong>Yoga:</strong> Paschimottanasana, Pawanmuktasana, Shalabhasana</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Cancer</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Chemotherapy, targeted therapy, immunotherapy</p>
+                <p><strong>Diet:</strong> Balanced diet with fruits, vegetables, and lean protein</p>
+                <p><strong>Exercise:</strong> Low-impact exercises (e.g., walking, yoga)</p>
+                <p><strong>Yoga:</strong> Meditation, deep relaxation, restorative yoga</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Tuberculosis</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Antibiotics (e.g., Isoniazid, Rifampicin)</p>
+                <p><strong>Diet:</strong> Protein-rich diet with vitamins and minerals</p>
+                <p><strong>Exercise:</strong> Gentle exercises (e.g., walking, breathing exercises)</p>
+                <p><strong>Yoga:</strong> Pranayama, Sukhasana, Matsyasana</p>
+            </div>
+        </div>
+
+        <div class="row2">
+            <div class="name">Dengue</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Pain relievers (e.g., Acetaminophen); avoid NSAIDs</p>
+                <p><strong>Diet:</strong> High-fluid intake; fruits like papaya and kiwi</p>
+                <p><strong>Exercise:</strong> Rest and recovery; light stretching</p>
+                <p><strong>Yoga:</strong> Deep breathing exercises, relaxation techniques</p>
+            </div>
+        </div>
+
+        <div class="row2">
+            <div class="name">Hypertension</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Diuretics, beta-blockers, ACE inhibitors</p>
+                <p><strong>Diet:</strong> Low-sodium diet; increase fruits and vegetables</p>
+                <p><strong>Exercise:</strong> Regular physical activities (e.g., walking, swimming)</p>
+                <p><strong>Yoga:</strong> Shavasana, Balasana, Setu Bandhasana</p>
+            </div>
+        </div>
+        
+        <div class="row2">
+            <div class="name">Chikungunya</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Pain relievers; avoid aspirin and NSAIDs</p>
+                <p><strong>Diet:</strong> Hydration with fluids; nutrient-rich diet</p>
+                <p><strong>Exercise:</strong> Gentle stretching; focus on recovery</p>
+                <p><strong>Yoga:</strong> Pranayama, gentle yoga poses for joint relief</p>
+            </div>
+        </div>
+
+        <div class="row2">
+            <div class="name">Asthma</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Inhalers, bronchodilators, corticosteroids</p>
+                <p><strong>Diet:</strong> Anti-inflammatory foods; avoid allergens</p>
+                <p><strong>Exercise:</strong> Moderate activities; swimming is beneficial</p>
+                <p><strong>Yoga:</strong> Bhramari Pranayama, Anulom Vilom, Ardha Matsyendrasana</p>
+            </div>
+        </div>
+
+        <div class="row2">
+            <div class="name">Typhoid</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Antibiotics (e.g., Ciprofloxacin, Azithromycin)</p>
+                <p><strong>Diet:</strong> High-calorie, bland diet; adequate hydration</p>
+                <p><strong>Exercise:</strong> Rest during the acute phase; light activity post-recovery</p>
+                <p><strong>Yoga:</strong> Pranayama, meditation for relaxation</p>
+            </div>
+        </div>
+
+        <div class="row2"> 
+            <div class="name">Hepatitis</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Antiviral medications, liver support therapy</p>
+                <p><strong>Diet:</strong> Low-fat, high-fiber diet; avoid alcohol</p>
+                <p><strong>Exercise:</strong> Light physical activities; focus on energy conservation</p>
+                <p><strong>Yoga:</strong> Gentle yoga, deep breathing exercises</p>
+            </div>
+        </div>
+
+        <div class="row2"> 
+            <div class="name">Heart Disease</div>
+            <hr>
+            <div class="card-details">
+                <p><strong>Medicine:</strong> Statins, beta-blockers, ACE inhibitors</p>
+                <p><strong>Diet:</strong> Heart-healthy diet; low in saturated fats and cholesterol</p>
+                <p><strong>Exercise:</strong> Regular cardio exercises (e.g., brisk walking, cycling)</p>
+                <p><strong>Yoga:</strong> Tadasana, Vrikshasana, Adho Mukha Svanasana</p>
+            </div>
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <script>
+        // Function to filter flashcards based on search input
+        function filterCards() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const diseases = document.querySelectorAll('.row1, .row2');
+            diseases.forEach(disease => {
+                if (disease.textContent.toLowerCase().includes(query)) {
+                    disease.style.display = 'block';
+                } else {
+                    disease.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to toggle dark/light mode
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.classList.toggle('dark-mode');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        }
+    </script>
+</body>
+</html>

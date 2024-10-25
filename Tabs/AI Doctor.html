@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> AI Doctor </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">AI-Powered Clinical Decision Support System</h1>
+        </div>
+    </nav>
+
+    <div class="other">
+        <div class="menubar"><a href="AI Doctor.html">Home</a></div>
+        <div class="menubar"><a href="Yoga/yoga.html" target="_blank">Yoga</a></div>
+        <div class="menubar"><a href="Binural Beats/binaural.html">Binaural</a></div>
+        <div class="menubar"><a href="Exercise/exercise.html" target="_blank">Exercise</a></div>
+        <div class="menubar"><a href="AI Health Assistant/Health Assistant.html" target="_blank">Health Assistant</a></div>
+        <div class="menubar"><a href="Navbar/common.html" target="_blank">Common diseases</a></div>
+        <div class="menubar"><a href="Navbar/team.html" target="_blank">Team</a></div>
+        <div class="menubar"><a href="Navbar/feedback.html" target="_blank">feedback</a></div>
+    </div>
+
+    <div class="loginuser"> 
+
+        <div class="icon"><img src="login.png" alt="" height="80px" width="80px"></div>
+        <p> <b><a href="Navbar/Loginpage.html">Login or signup</a></b> </p>
+
+    </div>
+
+    <!-- Main Content with Sidebar -->
+    <div class="main-content">
+        <!-- Sidebar -->
+        <div class="new">
+            <aside class="sidebar">
+                <ul>
+                    <li><a href="#" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#" onclick="showSection('healthtips')">Daily Health Tips</a></li>
+                    <li><a href="#" onclick="showSection('symptomChecker')">Symptom Checker</a></li>
+                    <li><a href="#" onclick="showSection('medicationReminders')">Medication Reminders</a></li>
+                    <li><a href="#" onclick="showSection('healthRecords')">Health Records</a></li>
+                    <li><a href="#" onclick="showSection('appointmentBooking')">Appointment Booking</a></li>
+                    <li><a href="#" onclick="showSection('insuranceIntegration')">Get Health Insurance</a></li>
+                    <li><a href="#" onclick="showSection('buymedicine')">Buy Medicines</a></li>
+                    <li><a href="#" onclick="showSection('chatbot')">Chatbot Assistance</a></li>
+                    <li><a href="#" onclick="showSection('healthEducation')">Health Education and Resources</a></li>
+                </ul>
+            </aside>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Home Section -->
+            <section id="home" class="active">
+                <h2>Welcome to AI-Powered Clinical Decision Support System</h2>
+                <p>Your one-stop solution for healthcare needs. Explore various features designed to assist you in managing your health efficiently.</p>
+            </section>
+
+            <!-- Symptom Checker Section -->
+            <section id="symptomChecker">
+                <h2>Symptom Checker</h2>
+                <form id="patientForm">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="symptoms">Enter your symptoms:</label>
+                        <input type="text" id="symptoms" name="symptoms" placeholder="e.g., fever, headache, cough" required>
+                    </div>
+                    <button type="submit">Check Symptoms</button>
+                </form>
+                <div id="results"></div>
+            </section>
+
+            <!-- Medication Reminders Section -->
+            <section id="medicationReminders">
+                <h2>Medication Reminders</h2>
+                <p>Set up reminders to take your medications on time.</p>
+                <iframe src="remainder.html" frameborder="0" height="400px" width="1000px"></iframe>
+            </section>
+
+            <!-- Health Records Section -->
+            <section id="healthRecords">
+                <h2>Health Records</h2>
+                <p>Store and manage your health records securely.</p>
+                <iframe src="Record.html" frameborder="0" height="400px" width="1000px"></iframe>
+                
+            </section>
+
+            <!-- Health tips -->
+            <section id="healthtips">
+                <h2>Health Tips</h2>
+                <p><b>Health tips are crucial for maintaining overall well-being by promoting healthy habits and preventing illness. 
+                    They offer practical advice that can enhance physical fitness, mental health, and longevity.</b></p>
+                
+                <div> 
+                   <button id="healthTipBtn">Get Daily Health Tip</button>
+               
+                   <div id="healthTipModal" class="modal">
+                       <div class="modal-content">
+                           <span class="close">&times;</span>
+                           <h2>Daily Health Tip</h2>
+                           <p id="healthTipText"></p>
+                           <button id="nextTipBtn">Next Tip</button>
+                       </div>
+                   </div>
+                </div>
+                <br>
+               
+            </section>
+
+            <!-- Appointment Booking Section -->
+            <section id="appointmentBooking">
+                <h2>Appointment Booking</h2>
+                <p>Book appointments with healthcare professionals easily.</p>
+                <iframe src="Booking.html" frameborder="0" height="400px" width="1000px"></iframe>
+               
+            </section>
+
+            <!-- Chatbot Assistance Section -->
+            <section id="chatbot" style="background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
+                <h2 style="font-family: 'Arial', sans-serif; color: #333;">Chatbot Assistance</h2>
+                <p style="font-family: 'Arial', sans-serif; color: #666; font-size: 18px;">Get help and answers to your health questions from our AI chatbot.</p>
+                <iframe src="http://127.0.0.1:7860/" frameborder="0" height="900px" width="1000px" style="border-radius: 10px; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"></iframe>
+            </section>
+                
+            
+
+            <!-- Health Education and Resources Section -->
+            <section id="healthEducation">
+                <h2>Health Education and Resources</h2>
+                <p>Access a wealth of health education materials and resources.</p>
+                
+                
+            </section>
+
+            <!-- Insurance Integration Section -->
+            <section id="insuranceIntegration">
+                <h2>Get Health Insurance</h2>
+                <p>Manage your health insurance details and claims.</p>
+                <a href="https://health.policybazaar.com/?offerid=21&r=true&pb_source=google&pb_medium=cpc&pb_term=Health+insurance&pb_campaign=Core_Desktop00Health_Insurance_networkg&loc_interest_ms=&loc_physical_ms=9062240&gad_source=1&gclid=CjwKCAjwufq2BhAmEiwAnZqw8iwnO9sRjS4tIesg4T2wFRysicpw6zxJOc74q4blsqcOjekGuYEv9RoCSloQAvD_BwE" target="_blank"><button><b>Click here to Get Insurance</b></button></a>
+                
+            </section>
+
+            
+           <!-- Buy Medicine -->
+            <section id="buymedicine">
+                <h2>Get Medicines</h2>
+                <p>Say GoodBye to high medicine prices</p>
+                <a href="https://shorturl.at/yywiv" target="_blank"><button><b>Click here to  Medicines</b></button></a>
+                
+            </section>
+
+        </div>
+    </div>
+
+   
+    <footer>
+        <div class="container">
+            <b><p>&copy;AI-Powered Clinical Decision Support System. All rights reserved.</p></b>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced BMI Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Import animations from Animate.css */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+body {
+    background: linear-gradient(120deg, #ffdde1, #ee9ca7);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.card {
+    border-radius: 15px;
+    background-color: #fff;
+    padding: 30px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    font-size: 2.5rem;
+}
+
+.result {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.result.underweight {
+    color: #ffcc00;
+}
+
+.result.normal {
+    color: #28a745;
+}
+
+.result.overweight {
+    color: #ff7f50;
+}
+
+.result.obese {
+    color: #dc3545;
+}
+
+.btn {
+    padding: 12px;
+    font-size: 1.2rem;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transition: background-color 0.3s;
+}
+
+.animate__animated {
+    --animate-duration: 1s;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card mx-auto mt-5 shadow-lg animate__animated animate__fadeInDown" style="max-width: 500px;">
+            <div class="card-body">
+                <h1 class="text-center mb-4 animate__animated animate__zoomIn">BMI Calculator</h1>
+                <form id="bmiForm">
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age:</label>
+                        <input type="number" class="form-control" id="age" placeholder="Enter your age">
+                    </div>
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender:</label>
+                        <select class="form-select" id="gender">
+                            <option value="" disabled selected>Select your gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="height" class="form-label">Height (in cm):</label>
+                        <input type="number" class="form-control" id="height" placeholder="Enter your height">
+                    </div>
+                    <div class="mb-3">
+                        <label for="weight" class="form-label">Weight (in kg):</label>
+                        <input type="number" class="form-control" id="weight" placeholder="Enter your weight">
+                    </div>
+                    <button type="button" class="btn btn-primary w-100 mt-4" onclick="calculateBMI()">Calculate BMI</button>
+                </form>
+                <div id="result" class="mt-4 text-center result animate__animated animate__fadeInUp"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+
+    <script>
+        function calculateBMI() {
+    const age = document.getElementById('age').value;
+    const gender = document.getElementById('gender').value;
+    const height = document.getElementById('height').value;
+    const weight = document.getElementById('weight').value;
+    const result = document.getElementById('result');
+
+    if (age === '' || gender === '' || height === '' || weight === '') {
+        result.innerHTML = "Please provide all fields (age, gender, height, weight)!";
+        result.style.color = 'red';
+        return;
+    }
+
+    const bmi = (weight / Math.pow(height / 100, 2)).toFixed(1);
+
+    let bmiStatus;
+    if (bmi < 18.5) {
+        bmiStatus = 'Underweight';
+        result.className = 'result underweight';
+    } else if (bmi >= 18.5 && bmi <= 24.9) {
+        bmiStatus = 'Normal';
+        result.className = 'result normal';
+    } else if (bmi >= 25 && bmi <= 29.9) {
+        bmiStatus = 'Overweight';
+        result.className = 'result overweight';
+    } else {
+        bmiStatus = 'Obese';
+        result.className = 'result obese';
+    }
+
+    result.innerHTML = `Your BMI is ${bmi} (${bmiStatus}), Gender: ${gender}, Age: ${age}`;
+}
+
+    </script>
+</body>
+</html>

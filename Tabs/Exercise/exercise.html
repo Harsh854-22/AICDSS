@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Guide</title>
+    <style>
+        body {
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #333;
+            color: #f4f4f9;
+        }
+
+        .header {
+            text-align: center;
+            font-size: 2em;
+            margin: 20px 0;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            border-color: #666;
+            outline: none;
+        }
+
+        #themeToggle {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #333;
+            color: #f4f4f9;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #themeToggle.dark-mode {
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 0 10px;
+        }
+
+
+        .exercise-card {
+            padding: 15px;
+            background-color: #eee;
+            border-radius: 15px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .exercise-card:hover {
+            background-color: #ddd;
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .exercise-card .name {
+            color: violet;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .exercise-card p {
+            margin: 8px 0;
+        }
+
+        body.dark-mode .exercise-card {
+            background-color: #222;
+            color: #f4f4f9;
+        }
+        
+
+        footer {
+            background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .exercise-card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            #searchInput {
+                max-width: 200px;
+            }
+
+            #themeToggle {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">Exercise Guide</div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search exercises..." oninput="filterCards()">
+        <button id="themeToggle" onclick="toggleTheme()">Switch to Dark Mode</button>
+    </div>
+    <div class="main" id="exerciseList">
+        <!-- ABS Workout -->
+        <div class="exercise-card">
+            <div class="name">Plank Hold</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/1etBJgfgDimAogaj6Z" width="270" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Strengthens lower body</p>
+            <p><strong>Benefits:</strong> Strengthens core, improves posture</p>
+            <p><strong>Instructions:</strong> Hold a plank position with forearms on the ground and body in a straight line.</p>
+            <p><strong>Tips:</strong> Keep your hips level and avoid dropping them.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Jumping Jack</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/h4OjWUS8fYOSQLq51v" width="250" height="171" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Increases cardiovascular fitness, warms up the body</p>
+            <p><strong>Instructions:</strong> Jump with legs spreading out and arms raising overhead, then return to the starting position.</p>
+            <p><strong>Tips:</strong> Keep a steady rhythm and land softly.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Crunches</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/dMGl30Pv5AlsQoqRSD" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Targets abdominal muscles</p>
+            <p><strong>Instructions:</strong> Lie on your back with knees bent and lift your upper body towards your knees.</p>
+            <p><strong>Tips:</strong> Avoid pulling on your neck; use your abs to lift.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Leg Raises</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/pWiVMJ0bMMizrlNeDG" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Strengthens lower abs</p>
+            <p><strong>Instructions:</strong> Lie flat on your back and lift your legs to a 90-degree angle, then lower them slowly.</p>
+            <p><strong>Tips:</strong> Keep your lower back pressed into the ground.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Russian Twist</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/cpKD9u3S25xYL8tcbr" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Works the oblique muscles</p>
+            <p><strong>Instructions:</strong> Sit with knees bent, lean back slightly, and twist your torso to each side.</p>
+            <p><strong>Tips:</strong> Keep your back straight and engage your core.</p>
+        </div>
+
+        <!-- Chest Workout -->
+        <div class="exercise-card">
+            <div class="name">Jumping Jack</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/h4OjWUS8fYOSQLq51v" width="250" height="171" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Instructions:</strong> Jump with legs spreading out and arms raising overhead, then return to the starting position.</p>
+            <p><strong>Tips:</strong> Keep a steady rhythm and land softly.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Incline Push-ups</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/GGfqjb6wTEYHtIdj2O" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Targets upper chest and triceps</p>
+            <p><strong>Instructions:</strong> Perform push-ups with your hands elevated on a bench or platform.</p>
+            <p><strong>Tips:</strong> Keep your body in a straight line and avoid arching your back.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Knee Push-ups</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/1JdJzYK1SEZVaCgj1P" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Strengthens chest and triceps with reduced intensity</p>
+            <p><strong>Instructions:</strong> Perform push-ups with knees on the ground.</p>
+            <p><strong>Tips:</strong> Maintain a straight line from your knees to your head.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Push-ups</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/mGWBjz74fn404BWUl4" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Builds upper body strength</p>
+            <p><strong>Instructions:</strong> Perform push-ups with your hands shoulder-width apart and body straight.</p>
+            <p><strong>Tips:</strong> Keep your elbows at a 45-degree angle from your body.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Wide Arm Push-ups</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/S4FcGkON0uaJJgGWVi" width="250" height="170"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Focuses on the chest and shoulders</p>
+            <p><strong>Instructions:</strong> Perform push-ups with hands wider than shoulder-width.</p>
+            <p><strong>Tips:</strong> Engage your core and keep your back straight.</p>
+        </div>
+
+        <!-- Legs Workout -->
+        <div class="exercise-card">
+            <div class="name">Squats</div>
+            <hr>
+            <img src="squats.jpg" alt="" width="250" height="170">
+            <p><strong>Instructions:</strong> Stand with feet shoulder-width apart and lower your body by bending your knees and hips, then return to standing.</p>
+            <p><strong>Tips:</strong> Keep your knees aligned with your toes and chest up.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Lunge</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/V0mkuOQxUbL0Y" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Targets quads, hamstrings, and glutes</p>
+            <p><strong>Instructions:</strong> Step forward with one leg and lower your body until both knees are bent at 90 degrees.</p>
+            <p><strong>Tips:</strong> Keep your front knee aligned with your ankle and avoid letting it extend past your toes.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Sumo Squat</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/SBh9lqCdi2b9TMOhoR" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Emphasizes inner thighs and glutes</p>
+            <p><strong>Instructions:</strong> Perform a squat with your feet wider than shoulder-width and toes pointed outward.</p>
+            <p><strong>Tips:</strong> Push through your heels and keep your chest upright.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Donkey Kick</div>
+            <hr>
+            <img src="Donkey Kick.jpg" alt="" width="250" height="170">
+            <p><strong>Benefits:</strong> Strengthens glutes and core</p>
+            <p><strong>Instructions:</strong> On all fours, lift one leg towards the ceiling while keeping your knee bent.</p>
+            <p><strong>Tips:</strong> Avoid arching your back and keep your core engaged.</p>
+        </div>
+
+        <!-- ARM Workout -->
+        <div class="exercise-card">
+            <div class="name">Jumping Jack</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/h4OjWUS8fYOSQLq51v" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Increases cardiovascular fitness, warms up the body</p>
+            <p><strong>Instructions:</strong> Jump with legs spreading out and arms raising overhead, then return to the starting position.</p>
+            <p><strong>Tips:</strong> Keep a steady rhythm and land softly.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Triceps Dips</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/yr17KHeCtKgjGE1SMb" width="250" height="170"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Targets triceps and shoulders</p>
+            <p><strong>Instructions:</strong> Use a bench or chair to support your hands and lower your body by bending your elbows, then push back up.</p>
+            <p><strong>Tips:</strong> Keep your elbows close to your body and avoid letting your shoulders hunch.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Diamond Push-ups</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/JZPaw2Y2oENHcZrHja" width="270" height="200"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Focuses on triceps and inner chest</p>
+            <p><strong>Instructions:</strong> Perform push-ups with hands close together, forming a diamond shape with your fingers.</p>
+            <p><strong>Tips:</strong> Keep your body in a straight line and avoid flaring your elbows out.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Punches</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/39BdMOJMK2YVqktnlS" width="250" height="170"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Enhances arm endurance and coordination</p>
+            <p><strong>Instructions:</strong> Throw punches in the air while maintaining a steady rhythm.</p>
+            <p><strong>Tips:</strong> Engage your core and keep your movements controlled.</p>
+        </div>
+
+        <div class="exercise-card">
+            <div class="name">Push-ups</div>
+            <hr>
+            <iframe src="https://giphy.com/embed/mGWBjz74fn404BWUl4" width="250" height="170" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><strong>Benefits:</strong> Builds upper body strength</p>
+            <p><strong>Instructions:</strong> Perform push-ups with your hands shoulder-width apart and body straight.</p>
+            <p><strong>Tips:</strong> Keep your elbows at a 45-degree angle from your body.</p>
+        </div>
+    </div>
+
+    <script>
+        let debounceTimeout;
+        function filterCards() {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(() => {
+                const query = document.getElementById('searchInput').value.toLowerCase();
+                const cards = document.querySelectorAll('.exercise-card');
+                cards.forEach(card => {
+                    if (card.textContent.toLowerCase().includes(query)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }, 300); // Adjust debounce delay as needed
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.classList.toggle('dark-mode');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #3494e6, #ec6ead);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0 15px;
+        }
+        .signup-card {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 15px;
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+            overflow-y: auto;
+            max-height: 90vh;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .signup-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+        .signup-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .signup-card img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .signup-card h2 {
+            text-align: center;
+            color: #3494e6;
+            margin-bottom: 20px;
+            font-weight: bold;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .signup-card h2::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #ec6ead;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+        }
+        .form-group label {
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+        }
+        .form-control {
+            height: 45px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 10px;
+        }
+        .form-control:focus {
+            border-color: #3494e6;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            background-color: #f9f9f9;
+        }
+        .btn-custom {
+            background-color: #55a630;
+            color: #fff;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: bold;
+            padding: 12px;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #4a8a2f;
+            transform: scale(1.05);
+        }
+        .text-center a {
+            color: #3494e6;
+            text-decoration: none;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+            font-weight: bold;
+        }
+        .text-center a:hover {
+            color: #ec6ead;
+            text-decoration: underline;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+          }
+          40% {
+            transform: translateY(-30px);
+          }
+          60% {
+            transform: translateY(-15px);
+          }
+        }
+
+        /* Animation for the image */
+        img{
+          animation: bounce 1s infinite;
+          transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .requirements {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .requirements p {
+            color: #ff0000;
+            margin: 0;
+        }
+        .requirements p.valid {
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="signup-card">
+            <img src="login.png" alt="Profile Picture" />
+            <h2>Signup</h2>
+            <form id="signupForm" onsubmit="return signup()">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Enter your first name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" class="form-control" placeholder="Enter your last name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter your username" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Create Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required />
+                    <div class="requirements">
+                        <p id="length" class="invalid">Must be at least 8 characters</p>
+                        <p id="lower" class="invalid">Must contain a lowercase letter</p>
+                        <p id="upper" class="invalid">Must contain an uppercase letter</p>
+                        <p id="number" class="invalid">Must contain a number</p>
+                        <p id="symbol" class="invalid">Must contain a symbol (!@#$%^&*)</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" class="form-control" required />
+                </div>
+
+                <fieldset class="form-group">
+                    <legend>Gender</legend>
+                    <div class="form-check">
+                        <input type="radio" id="male" name="gender" value="male" class="form-check-input" />
+                        <label for="male" class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="female" name="gender" value="female" class="form-check-input" />
+                        <label for="female" class="form-check-label">Female</label>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn btn-custom btn-block" id="submitBtn" disabled>Signup</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <p>Already have an account? <a href="Loginpage.html">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const submitBtn = document.getElementById("submitBtn");
+
+        const lengthCriteria = document.getElementById("length");
+        const lowerCriteria = document.getElementById("lower");
+        const upperCriteria = document.getElementById("upper");
+        const numberCriteria = document.getElementById("number");
+        const symbolCriteria = document.getElementById("symbol");
+
+        const lowerCasePattern = /[a-z]/;
+        const upperCasePattern = /[A-Z]/;
+        const numberPattern = /[0-9]/;
+        const symbolPattern = /[!@#$%^&*]/;
+
+        function validatePassword() {
+            const passwordValue = passwordInput.value;
+
+            let isValid = true;
+
+            if (passwordValue.length >= 8) {
+                lengthCriteria.classList.remove("invalid");
+                lengthCriteria.classList.add("valid");
+            } else {
+                lengthCriteria.classList.remove("valid");
+                lengthCriteria.classList.add("invalid");
+                isValid = false;
+            }
+
+            if (lowerCasePattern.test(passwordValue)) {
+                lowerCriteria.classList.remove("invalid");
+                lowerCriteria.classList.add("valid");
+            } else {
+                lowerCriteria.classList.remove("valid");
+                lowerCriteria.classList.add("invalid");
+                isValid = false;
+            }
+
+            if (upperCasePattern.test(passwordValue)) {
+                upperCriteria.classList.remove("invalid");
+                upperCriteria.classList.add("valid");
+            } else {
+                upperCriteria.classList.remove("valid");
+                upperCriteria.classList.add("invalid");
+                isValid = false;
+            }
+
+            if (numberPattern.test(passwordValue)) {
+                numberCriteria.classList.remove("invalid");
+                numberCriteria.classList.add("valid");
+            } else {
+                numberCriteria.classList.remove("valid");
+                numberCriteria.classList.add("invalid");
+                isValid = false;
+            }
+
+            if (symbolPattern.test(passwordValue)) {
+                symbolCriteria.classList.remove("invalid");
+                symbolCriteria.classList.add("valid");
+            } else {
+                symbolCriteria.classList.remove("valid");
+                symbolCriteria.classList.add("invalid");
+                isValid = false;
+            }
+
+            submitBtn.disabled = !isValid;
+        }
+
+        passwordInput.addEventListener("input", validatePassword);
+
+        function signup() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            if (username === "" || password === "") {
+                alert("Please enter both username and password.");
+                return false;
+            } else if (username === "user" && password === "password") {
+                alert("Signup successful!");
+                return true; 
+            } else {
+                alert("Invalid username or password.");
+                return false; 
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

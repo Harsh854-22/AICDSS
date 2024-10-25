@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1e1e2e;
+        }
+
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            background-color: #2d2d44;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background-color: #3b3b5a;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #2d2d44;
+            color: #fff;
+        }
+
+        .input-container {
+            display: flex;
+            background-color: #3b3b5a;
+            padding: 10px;
+        }
+
+        #user-input {
+            border: none;
+            padding: 10px;
+            flex: 1;
+            box-sizing: border-box;
+            border-radius: 20px;
+            background-color: #48486b;
+            color: #fff;
+        }
+
+        #user-input::placeholder {
+            color: #bbb;
+        }
+
+        button {
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border-radius: 20px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            margin: 10px 0;
+            max-width: 75%;
+            padding: 10px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .message.user {
+         background-color: #007BFF;
+         align-self: flex-end;
+         color: white;
+         border-bottom-right-radius: 0;
+         text-align: right;
+        }
+
+        .message.chatgpt {
+         background-color: #3b3b5a;
+         align-self: flex-start;
+         color: #ddd;
+         border-bottom-left-radius: 0;
+         text-align: left;
+        }
+
+
+        .timestamp {
+            font-size: 0.7em;
+            color: #bbb;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            margin: 10px 0;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-indicator span {
+            display: block;
+            width: 8px;
+            height: 8px;
+            margin: 0 2px;
+            background-color: #ddd;
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes blink {
+            0%, 80%, 100% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Chat with Us</div>
+        <div class="chat-box" id="chat-box"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function sendMessage() {
+            const chatBox = document.getElementById('chat-box');
+            const userInput = document.getElementById('user-input');
+            
+            const message = userInput.value;
+            if (message.trim() === '') return;
+
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.innerHTML = `<div>${message}</div><div class="timestamp">${getCurrentTime()}</div>`;
+            chatBox.appendChild(userMessage);
+
+            userInput.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            showTypingIndicator();
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = generateResponse(message);
+                const chatgptMessage = document.createElement('div');
+                chatgptMessage.className = 'message chatgpt';
+                chatgptMessage.innerHTML = `<div>${response}</div><div class="timestamp">${getCurrentTime()}</div>`;
+                chatBox.appendChild(chatgptMessage);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+
+        function generateResponse(message) {
+    const lowerMessage = message.toLowerCase();
+
+    if (lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
+        return 'Hello! How can I assist you today?';
+    } else if (lowerMessage.includes('how are you')) {
+        return 'I am just a bot, but I’m functioning as expected! How about you?';
+    } else if (lowerMessage.includes('what\'s your name') || lowerMessage.includes('who are you')) {
+        return 'I am ChatGPT, your friendly virtual assistant!';
+    } else if (lowerMessage.includes('thank you') || lowerMessage.includes('thanks')) {
+        return 'You’re welcome! If you have more questions, feel free to ask.';
+    } else if (lowerMessage.includes('bye')) {
+        return 'Goodbye! Have a great day!';
+    } else if (lowerMessage.includes('what is your favorite color')) {
+        return 'As a bot, I don’t have preferences, but blue seems to be a popular choice!';
+    } else if (lowerMessage.includes('what is the capital of france')) {
+        return 'The capital of France is Paris.';
+    } else if (lowerMessage.includes('what is 2 + 2')) {
+        return '2 + 2 equals 4.';
+    } else if (lowerMessage.includes('who is the president of the united states')) {
+        return 'As of the last update, the President of the United States is Joe Biden.';
+    } else if (lowerMessage.includes('tell me a joke')) {
+        return 'Why don’t skeletons fight each other? They don’t have the guts!';
+    } else if (lowerMessage.includes('what is the time')) {
+        return `The current time is ${getCurrentTime()}.`;
+    } else if (lowerMessage.includes('what\'s the weather like')) {
+        return 'I’m not able to check the weather, but you can use a weather app for that!';
+    } else if (lowerMessage.includes('what is the meaning of life')) {
+        return 'The meaning of life is a philosophical question that has been debated for centuries. Some say it’s 42!';
+    } else if (lowerMessage.includes('do you know any programming languages')) {
+        return 'I can help you with various programming languages like Python, JavaScript, C++, and more!';
+    } else if (lowerMessage.includes('can you help me with my homework')) {
+        return 'Sure! What subject or topic do you need help with?';
+    } else if (lowerMessage.includes('what is your purpose')) {
+        return 'My purpose is to assist you with information, answer questions, and help you in any way I can!';
+    } else if (lowerMessage.includes('how old are you')) {
+        return 'I don’t have an age, but I was created by OpenAI and I’m always learning!';
+    } else if (lowerMessage.includes('tell me something interesting')) {
+        return 'Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible!';
+    } else {
+        return 'I’m not sure how to respond to that, but I’m here to help with any questions you have!';
+    }
+}
+
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function showTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) typingIndicator.classList.add('active');
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) typingIndicator.classList.remove('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatBox = document.getElementById('chat-box');
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'typing-indicator';
+            typingIndicator.id = 'typing-indicator';
+            typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+            chatBox.appendChild(typingIndicator);
+        });
+    </script>
+</body>
+</html>

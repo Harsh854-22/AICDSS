@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Quality Assessment</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+    background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    border-radius: 15px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    font-size: 2.5rem;
+    transition: color 0.3s;
+}
+
+h1:hover {
+    color: #007bff;
+}
+
+.result {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.btn {
+    padding: 12px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card mx-auto shadow-lg" style="max-width: 700px;">
+            <div class="card-body">
+                <h1 class="text-center mb-4">Sleep Quality Assessment</h1>
+                <form id="sleepForm">
+                    <div class="mb-3">
+                        <label for="sleepDuration" class="form-label">How many hours do you sleep each night?</label>
+                        <input type="number" class="form-control" id="sleepDuration" placeholder="Enter hours">
+                    </div>
+                    <div class="mb-3">
+                        <label for="sleepQuality" class="form-label">How would you rate your sleep quality?</label>
+                        <select class="form-select" id="sleepQuality">
+                            <option value="" disabled selected>Select rating</option>
+                            <option value="1">Very Poor</option>
+                            <option value="2">Poor</option>
+                            <option value="3">Average</option>
+                            <option value="4">Good</option>
+                            <option value="5">Excellent</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fallAsleep" class="form-label">How long does it usually take for you to fall asleep?</label>
+                        <select class="form-select" id="fallAsleep">
+                            <option value="" disabled selected>Select duration</option>
+                            <option value="1">Less than 15 minutes</option>
+                            <option value="2">15-30 minutes</option>
+                            <option value="3">30-60 minutes</option>
+                            <option value="4">More than 60 minutes</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nightWakings" class="form-label">How often do you wake up during the night?</label>
+                        <select class="form-select" id="nightWakings">
+                            <option value="" disabled selected>Select frequency</option>
+                            <option value="1">Never</option>
+                            <option value="2">1-2 times per week</option>
+                            <option value="3">3-4 times per week</option>
+                            <option value="4">Every night</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sleepEnvironment" class="form-label">How would you rate your sleep environment?</label>
+                        <select class="form-select" id="sleepEnvironment">
+                            <option value="" disabled selected>Select rating</option>
+                            <option value="1">Very Poor</option>
+                            <option value="2">Poor</option>
+                            <option value="3">Average</option>
+                            <option value="4">Good</option>
+                            <option value="5">Excellent</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sleepProblems" class="form-label">Do you experience any of the following problems during sleep?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="insomnia">
+                            <label class="form-check-label" for="insomnia">Insomnia</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="frequentWaking">
+                            <label class="form-check-label" for="frequentWaking">Frequent Waking</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="snoring">
+                            <label class="form-check-label" for="snoring">Snoring</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="sleepApnea">
+                            <label class="form-check-label" for="sleepApnea">Sleep Apnea</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="otherProblems">
+                            <label class="form-check-label" for="otherProblems">Other</label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary w-100" onclick="assessSleepQuality()">Submit</button>
+                </form>
+                <div id="result" class="mt-4 text-center result"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function assessSleepQuality() {
+    const sleepDuration = document.getElementById('sleepDuration').value;
+    const sleepQuality = document.getElementById('sleepQuality').value;
+    const fallAsleep = document.getElementById('fallAsleep').value;
+    const nightWakings = document.getElementById('nightWakings').value;
+    const sleepEnvironment = document.getElementById('sleepEnvironment').value;
+    const insomnia = document.getElementById('insomnia').checked;
+    const frequentWaking = document.getElementById('frequentWaking').checked;
+    const snoring = document.getElementById('snoring').checked;
+    const sleepApnea = document.getElementById('sleepApnea').checked;
+    const otherProblems = document.getElementById('otherProblems').checked;
+    const result = document.getElementById('result');
+
+    if (sleepDuration === '' || sleepQuality === '' || fallAsleep === '' || nightWakings === '' || sleepEnvironment === '') {
+        result.innerHTML = "Please fill in all required fields!";
+        result.style.color = 'red';
+        return;
+    }
+
+    let score = 0;
+    if (sleepDuration >= 7 && sleepDuration <= 9) score += 2; // Ideal sleep duration
+    else if (sleepDuration < 7) score -= 1;
+    else score -= 1;
+
+    score += parseInt(sleepQuality);
+    score -= parseInt(fallAsleep);
+    score -= parseInt(nightWakings);
+    score += parseInt(sleepEnvironment);
+
+    let issues = [];
+    if (insomnia) issues.push("Insomnia");
+    if (frequentWaking) issues.push("Frequent Waking");
+    if (snoring) issues.push("Snoring");
+    if (sleepApnea) issues.push("Sleep Apnea");
+    if (otherProblems) issues.push("Other Problems");
+
+    let feedback = "";
+    let advice = "";
+
+    if (score >= 8) {
+        feedback = "Your sleep quality is generally good. Keep up the good habits!";
+        advice = "Continue maintaining a consistent sleep schedule, avoid caffeine and heavy meals before bedtime, and create a calming bedtime routine.";
+    } else if (score >= 5) {
+        feedback = "Your sleep quality is average. Consider making some improvements.";
+        advice = "Try to establish a consistent sleep schedule. Avoid screens and bright lights at least an hour before bed. Make your sleep environment as comfortable as possible.";
+        if (issues.length > 0) {
+            advice += ` Address the following issues for better sleep: ${issues.join(', ')}.`;
+        }
+    } else {
+        feedback = "Your sleep quality needs improvement. Address the following issues for better sleep:";
+        advice = "Consider the following tips to improve your sleep quality:";
+        if (issues.length > 0) {
+            advice += ` Address issues such as ${issues.join(', ')}.`;
+        } else {
+            advice += " Focus on improving your sleep environment and habits.";
+        }
+        advice += " Additional tips include: maintaining a regular sleep schedule, creating a relaxing bedtime routine, reducing caffeine and alcohol intake, and consulting a healthcare professional if you have persistent sleep problems.";
+    }
+
+    result.style.color = '#007bff';
+    result.innerHTML = `<p><strong>${feedback}</strong></p><p>${advice}</p>`;
+}
+
+    </script>
+</body>
+</html>

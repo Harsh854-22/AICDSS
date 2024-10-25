@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medication Reminder</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f9fc;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      max-width: 450px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      text-align: left;
+      font-size: 12px; 
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px; 
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 12px; 
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 8px 15px; 
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px; 
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #reminder-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #reminder-list li {
+      background-color: #e9ecef;
+      padding: 8px; 
+      margin-bottom: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px; 
+    }
+
+    .remove-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 8px; 
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px; 
+    }
+
+    .remove-btn:hover {
+      background-color: #c82333;
+    }
+
+    .no-reminders {
+      color: #777;
+      font-size: 12px;
+    }
+
+    .repeat-option {
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        width: 100%;
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 18px; 
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Medication Reminder</h1>
+    
+    <div class="input-group">
+      <label for="medication">Medication Name:</label>
+      <input type="text" id="medication" placeholder="Enter medication name">
+    </div>
+
+    <div class="input-group">
+      <label for="time">Reminder Time:</label>
+      <input type="time" id="time">
+    </div>
+
+    <div class="repeat-option">
+      <label for="repeat">Repeat Daily?</label>
+      <select id="repeat">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+    </div>
+
+    <button onclick="addReminder()">Add Reminder</button>
+
+    <h2>Your Reminders</h2>
+    <ul id="reminder-list">
+      <li class="no-reminders">No reminders yet.</li>
+    </ul>
+  </div>
+
+  <script>
+    let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+
+    function addReminder() {
+      const medication = document.getElementById('medication').value;
+      const time = document.getElementById('time').value;
+      const repeat = document.getElementById('repeat').value;
+
+      if (!medication || !time) {
+        alert('Please fill in both fields!');
+        return;
+      }
+
+      if (reminders.some(reminder => reminder.medication === medication && reminder.time === time)) {
+        alert('Duplicate reminder not allowed.');
+        return;
+      }
+
+      reminders.push({ medication, time, repeat });
+      localStorage.setItem('reminders', JSON.stringify(reminders));
+
+      displayReminders();
+      setReminders();
+
+      document.getElementById('medication').value = '';
+      document.getElementById('time').value = '';
+    }
+
+    function displayReminders() {
+      const reminderList = document.getElementById('reminder-list');
+      reminderList.innerHTML = ''; 
+
+      if (reminders.length === 0) {
+        reminderList.innerHTML = '<li class="no-reminders">No reminders yet.</li>';
+        return;
+      }
+
+      reminders.forEach((reminder, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${reminder.medication} at ${reminder.time} ${reminder.repeat === 'yes' ? '(Daily)' : ''}
+                        <button class="remove-btn" onclick="removeReminder(${index})">Remove</button>`;
+        reminderList.appendChild(li);
+      });
+    }
+
+    function removeReminder(index) {
+      reminders.splice(index, 1);
+      localStorage.setItem('reminders', JSON.stringify(reminders));
+      displayReminders();
+    }
+
+    function setReminders() {
+      reminders.forEach(reminder => {
+        const reminderTime = new Date();
+        const [hours, minutes] = reminder.time.split(':');
+        reminderTime.setHours(hours, minutes, 0, 0);
+
+        const currentTime = new Date();
+        const timeout = reminderTime - currentTime;
+
+        if (timeout > 0) {
+          setTimeout(() => {
+            alert(`Time to take your medication: ${reminder.medication}`);
+            playSound();
+            if (reminder.repeat === 'yes') setDailyReminder(reminder);
+          }, timeout);
+        }
+      });
+    }
+
+    function playSound() {
+      const audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
+      audio.play();
+    }
+
+    function setDailyReminder(reminder) {
+      const nextDay = new Date();
+      nextDay.setDate(nextDay.getDate() + 1);
+      nextDay.setHours(reminder.time.split(':')[0]);
+      nextDay.setMinutes(reminder.time.split(':')[1]);
+      setTimeout(() => {
+        alert(`Time to take your daily medication: ${reminder.medication}`);
+        playSound();
+        setDailyReminder(reminder);
+      }, nextDay - new Date());
+    }
+
+    window.onload = function () {
+      displayReminders();
+      setReminders();
+    }
+  </script>
+
+</body>
+</html>

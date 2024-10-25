@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Poses</title>
+    <style>
+        body {
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #333;
+            color: #f4f4f9;
+        }
+
+        .most {
+            height: 40px;
+            width: 100%;
+            color: #4CAF50;
+            font-size: 2em;
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .main {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 10px;
+        }
+
+        .row1, .row2 {
+            width: 100%;
+            max-width: 260px;
+            padding: 10px;
+            font-size: 1em;
+            background-color: #eee;
+            border-radius: 15px;
+            transition: 0.5s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+            &:hover{
+                font-weight: bold;
+                transform: scale(1.1);
+            }
+        }
+
+        .name {
+            color: #4CAF50;
+            font-size: 1.5em;
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+        }
+
+        body.dark-mode .row1, body.dark-mode .row2 {
+            background-color: #555;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            border-color: #666;
+            outline: none;
+        }
+
+        #themeToggle {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #333;
+            color: #f4f4f9;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #themeToggle.dark-mode {
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        footer {
+            background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .name {
+                font-size: 1.2em;
+            }
+            #searchInput {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .name {
+                font-size: 1em;
+            }
+            #searchInput {
+                max-width: 200px;
+            }
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            #themeToggle {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="most">Yoga Poses</div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search poses..." oninput="filterCards()">
+        <button id="themeToggle" onclick="toggleTheme()">Switch to Dark Mode</button>
+    </div>
+
+    <div class="main" id="poseList">
+        <div class="row1">
+            <div class="name">Downward Dog</div>
+            <hr>
+            <div class="card-details">
+                <img src="downward dog.jpg" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Strengthens the entire body, stretches the hamstrings and calves</p>
+                <p><strong>Instructions:</strong> Start on hands and knees, lift hips, and straighten legs while pressing heels towards the floor</p>
+                <p><strong>Tips:</strong> Keep your hands shoulder-width apart and feet hip-width apart</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Warrior II</div>
+            <hr>
+            <div class="card-details">
+                <img src="Warrior II.jpg" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Strengthens legs, opens hips and chest</p>
+                <p><strong>Instructions:</strong> Stand with legs wide, turn one foot out, bend knee, extend arms to sides</p>
+                <p><strong>Tips:</strong> Ensure knee is aligned with ankle, engage core</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Tree Pose</div>
+            <hr>
+            <div class="card-details">
+                <img src="tree pose.webp" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Improves balance and stability, strengthens legs</p>
+                <p><strong>Instructions:</strong> Stand on one leg, place other foot on inner thigh, bring hands together at chest</p>
+                <p><strong>Tips:</strong> Focus on a fixed point to maintain balance</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Child’s Pose</div>
+            <hr>
+            <div class="card-details">
+                <img src="Child-Pose.jpg" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Stretches the back, hips, and thighs, relaxes the body</p>
+                <p><strong>Instructions:</strong> Kneel on the floor, sit back on heels, extend arms forward and lower forehead to the ground</p>
+                <p><strong>Tips:</strong> Breathe deeply and relax into the pose</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Bridge Pose</div>
+            <hr>
+            <div class="card-details">
+                <img src="Bridge-Pose.webp" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Strengthens the glutes and lower back, opens the chest</p>
+                <p><strong>Instructions:</strong> Lie on your back, bend knees, lift hips, and press feet into the floor</p>
+                <p><strong>Tips:</strong> Keep your shoulders on the ground and clasp hands under your back</p>
+            </div>
+        </div>
+
+        <div class="row2">
+            <div class="name">Cat-Cow Pose</div>
+            <hr>
+            <div class="card-details">
+                <img src="Cat-Cow Pose.jpg" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Increases flexibility of the spine, warms up the body</p>
+                <p><strong>Instructions:</strong> Start on hands and knees, alternate between arching your back and dipping your belly</p>
+                <p><strong>Tips:</strong> Move slowly and synchronize breath with movement</p>
+            </div>
+        </div>
+
+        <div class="row2">
+            <div class="name">Cobra Pose</div>
+            <hr>
+            <div class="card-details">
+                <img src="Cobra-pose.avif" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Stretches the chest and abdomen, strengthens the spine</p>
+                <p><strong>Instructions:</strong> Lie face down, place hands under shoulders, lift chest while keeping pelvis on the ground</p>
+                <p><strong>Tips:</strong> Keep elbows close to your body and gaze slightly upward</p>
+            </div>
+        </div>
+        
+        <div class="row2">
+            <div class="name">Seated Forward Bend</div>
+            <hr>
+            <div class="card-details">
+                <img src="seated-forward-bend-pose.jpg" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Stretches the hamstrings and lower back</p>
+                <p><strong>Instructions:</strong> Sit with legs extended, reach forward towards toes while keeping back straight</p>
+                <p><strong>Tips:</strong> Bend at the hips rather than the waist to avoid straining the back</p>
+            </div>
+        </div>
+
+        <div class="row2">
+            <div class="name">Plank Pose</div>
+            <hr>
+            <div class="card-details">
+                <img src="Plank Pose 1.webp" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Strengthens core, arms, and legs</p>
+                <p><strong>Instructions:</strong> Start in a push-up position, keep body in a straight line from head to heels</p>
+                <p><strong>Tips:</strong> Engage your core and keep your body aligned</p>
+            </div>
+        </div>
+
+        <div class="row2"> 
+            <div class="name">Legs Up the Wall</div>
+            <hr>
+            <div class="card-details">
+                <img src="Legs Up the Wall.webp" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Relieves tired legs, improves circulation</p>
+                <p><strong>Instructions:</strong> Lie on your back with legs extended up the wall, relax your arms by your sides</p>
+                <p><strong>Tips:</strong> Use a folded blanket under your hips for added support</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Vajrasana</div>
+            <hr>
+            <div class="card-details">
+                <img src="vajrasana.jpg" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Improves digestion, helps with relaxation</p>
+                <p><strong>Instructions:</strong> Kneel on the floor, sit back on heels, keeping your back straight</p>
+                <p><strong>Tips:</strong> Ensure your feet are close together and your knees are apart</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Dhanurasana</div>
+            <hr>
+            <div class="card-details">
+                <img src="dhanurasana.jpg" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Stretches the front body, strengthens the back</p>
+                <p><strong>Instructions:</strong> Lie on your stomach, bend knees, hold ankles, and lift chest and thighs off the ground</p>
+                <p><strong>Tips:</strong> Keep breathing evenly while in the pose</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Mritasana</div>
+            <hr>
+            <div class="card-details">
+                <img src="mritasana.webp" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Enhances flexibility and core strength</p>
+                <p><strong>Instructions:</strong> Lie on your back, bend knees, and hold your feet while pressing knees towards the floor</p>
+                <p><strong>Tips:</strong> Maintain a gentle stretch without forcing the knees down</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Ustrasana</div>
+            <hr>
+            <div class="card-details">
+                <img src="ustrasana.webp" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> Opens the chest, stretches the front of the body</p>
+                <p><strong>Instructions:</strong> Kneel on the floor, arch your back, and reach for your heels with your hands</p>
+                <p><strong>Tips:</strong> Keep the neck relaxed and don’t compress the lower back</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name">Surya Namaskar</div>
+            <hr>
+            <div class="card-details">
+                <img src="surya namaskar.webp" alt="Tree Pose" style="width: 100%; border-radius: 10px;">
+                <p><strong>Benefits:</strong> A full-body workout, improves flexibility, strength, and balance</p>
+                <p><strong>Instructions:</strong> A series of poses performed in a sequence, starting with a standing pose, moving into forward bends, and finishing with backbends</p>
+                <p><strong>Tips:</strong> Coordinate breathing with movements and perform the sequence slowly</p>
+            </div>
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <script>
+        // Function to filter yoga poses based on search input
+        function filterCards() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const poses = document.querySelectorAll('.row1, .row2');
+            poses.forEach(pose => {
+                if (pose.textContent.toLowerCase().includes(query)) {
+                    pose.style.display = 'block';
+                } else {
+                    pose.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to toggle dark/light mode
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.classList.toggle('dark-mode');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        }
+    </script>
+</body>
+</html>

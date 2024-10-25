@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #710d2f, #1f2251);
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .main {
+            max-width: 90%;
+            width: 500px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 3px solid #2e8b57;
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+        .main1 {
+            font-size: 30px;
+            color: #2e8b57;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #2e8b57;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .emoji {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 50px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .emopart {
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: emojiBounce 1s ease;
+        }
+        .emopart:hover {
+            filter: grayscale(0%);
+            transform: scale(1.4);
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            height: 40px;
+            width: 100%;
+            font-size: 20px;
+            border-radius: 25px;
+            background-color: #2e8b57;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #1c6c43;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes emojiBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        @media (max-width: 600px) {
+            .main1 {
+                font-size: 24px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            .emoji {
+                font-size: 40px;
+                gap: 10px;
+            }
+            button {
+                font-size: 18px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <div class="main1">Feedback</div>
+            <div>
+                <h1>How are you feeling?</h1>
+                <p>Your input is valuable in helping us better understand your needs and tailor our service accordingly.</p>
+            </div>
+            <div class="emoji"> 
+                <div class="emopart" title="Very Sad" data-emoji="😥">😥</div>
+                <div class="emopart" title="Sad" data-emoji="😔">😔</div>
+                <div class="emopart" title="Neutral" data-emoji="😐">😐</div>
+                <div class="emopart" title="Happy" data-emoji="🙂">🙂</div>
+                <div class="emopart" title="Very Happy" data-emoji="🥰">🥰</div>
+            </div>
+            <div>
+                <label for="feedback"><b>Feedback:</b></label><br>
+                <textarea id="feedback" name="feedback" placeholder="Enter your feedback" required aria-required="true"></textarea>
+            </div>
+            <button type="submit" id="submit">Submit</button>
+        </div>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedEmoji = '';
+
+        document.querySelectorAll('.emopart').forEach(emoji => {
+            emoji.addEventListener('click', function() {
+                document.querySelectorAll('.emopart').forEach(e => e.style.filter = 'grayscale(100%)');
+                this.style.filter = 'grayscale(0%)';
+                selectedEmoji = this.getAttribute('data-emoji');
+            });
+        });
+
+        document.getElementById('submit').addEventListener('click', function() {
+            const feedbackText = document.getElementById('feedback').value;
+
+            if (!selectedEmoji) {
+                alert('Please select an emoji to express your feeling.');
+                return;
+            }
+
+            if (!feedbackText) {
+                alert('Please enter your feedback.');
+                return;
+            }
+
+            alert(`Thank you for your feedback!\n\nFeeling: ${selectedEmoji}\nFeedback: ${feedbackText}`);
+        });
+    </script>
+</body>
+</html>

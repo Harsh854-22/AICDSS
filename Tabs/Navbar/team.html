@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Members</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: radial-gradient( circle 1292px at -13.6% 51.7%,  rgba(0,56,68,1) 0%, rgba(163,217,185,1) 51.5%);
+
+        }
+        .main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 50px;
+            margin-top: 150px;
+        }
+        .main1 {
+            height: 400px;
+            width: 90%;
+            max-width: 300px;
+            border: 1px solid black;
+            border-radius: 30px;
+            background-color: white;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .main1:hover {
+            transform: scale(1.05);
+            filter: saturate(1.6);
+        }
+        .image-cont {
+            height: 120px;
+            background-color: maroon;
+            border-radius: 30px 30px 0 0;
+        }
+        .image img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            margin-top: 5px;
+        }
+        p {
+            font-size: 16px;
+            padding: 0 15px;
+        }
+        .profile-footer {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+        .profile-footer button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        a{
+            color: black;
+            text-decoration: none;
+        }
+        .follow-btn {
+            background-color: #007bff;
+            color: black;
+            transition: all 0.3s ease;
+        }
+        .message-btn {
+            background-color: #28a745;
+            color: black;
+            transition: all 0.3s ease;
+           
+        }
+        .follow-btn:hover {
+            transform: scale(1.1);
+            background-color: #0056b3;
+        }
+        .message-btn:hover {
+            transform: scale(1.1);
+            background-color: #218838;
+        }
+       
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .main {
+                margin-top: 30px;
+            }
+            .main1 {
+                width: 90%;
+            }
+            p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main1 {
+                width: 100%;
+                margin: 10px 0;
+            }
+            p {
+                font-size: 12px;
+            }
+            .profile-footer {
+                flex-direction: column;
+            }
+            .profile-footer button {
+                margin-bottom: 10px;
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main">
+
+        <div class="main1"> 
+            <div class="image-cont">
+                <div class="image"> <img src="images/adarsh.jpg" alt="Adarsh Pal"> </div>
+            </div>
+            <div class="text">
+                <h1> Adarsh Pal </h1>
+                <h3> F L X I T</h3>
+            </div>
+            <div>
+                <p>
+                   Interface and front-end handler. Making the web page responsive and creative.
+                </p>
+            </div>
+            <div class="profile-footer">
+                <button class="follow-btn"><b><a href="https://shorturl.at/TZtX2" target="_blank">Follow</a></b></button>
+                <button class="message-btn"><b>Message</b></button>
+            </div>
+        </div>
+
+        <div class="main1"> 
+            <div class="image-cont">
+                <div class="image"> <img src="images/harsh.jpg"> </div>
+            </div>
+            <div class="text">
+                <h1> Harsh Singh </h1>
+                <h3> F L X I T</h3>
+            </div>
+            <div>
+                <p>
+                   Head of the project, full-stack developer .Back-end handler, data manager and bug fixer.  
+                </p>
+            </div>
+            <br>
+            <div class="profile-footer">
+                <button class="follow-btn"><b><a href="https://shorturl.at/5pMAS" target="_blank">Follow</a></b></button>
+                <button class="message-btn"><b>Message</b></button>
+            </div>
+        </div>
+
+        <div class="main1"> 
+            <div class="image-cont">
+                <div class="image"> <img src="images/aayush.jpg"> </div>
+            </div>
+            <div class="text">
+                <h1> Aayush Satam </h1>
+                <h3> F L X I T</h3>
+            </div>
+            <div>
+                <p>
+                   Media managment and interface handeler. video editing and content manager 
+                </p>
+            </div>
+            <br>
+            <div class="profile-footer">
+                <button class="follow-btn"><b><a href="https://shorturl.at/C26Co" target="_blank">Follow</a></b></button>
+                <button class="message-btn"><b>Message</b></button>
+            </div>
+        </div>
+
+        <div class="main1"> 
+            <div class="image-cont">
+                <div class="image"> <img src="images/sonali.jpg"> </div>
+            </div>
+            <div class="text">
+                <h1> Sonali Chavan </h1>
+                <h3> F   L  X  I  T</h3>
+            </div>
+            <div>
+                <p>
+                   Information researcher and data collector. Improving the front-end interface and making it responsive.  
+                </p>
+            </div>
+            <br>
+            <div class="profile-footer">
+                <button class="follow-btn"><b>Follow</b></button>
+                <button class="message-btn"><b>Message</b></button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

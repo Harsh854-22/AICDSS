@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Health Assistant</title>
+    <style>
+        body {
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #333;
+            color: #f4f4f9;
+        }
+
+        .most {
+            height: 40px;
+            width: 100%;
+            color: #4CAF50;
+            font-size: 2em;
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .main {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            justify-content: center;
+            gap: 30px;
+            padding: 0 10px;
+        }
+
+        .row1, .row2 {
+            width: 100%;
+            max-width: 260px;
+            padding: 10px;
+            font-size: 1em;
+            background-color: #eee;
+            border-radius: 15px;
+            transition: 0.5s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .row1:hover, .row2:hover {
+            
+            transform: scale(1.1);
+        }
+
+        .name {
+            color: #4CAF50;
+            font-size: 1.5em;
+            font-weight: bold;
+            font-style: italic;
+            text-align: center;
+        }
+
+        body.dark-mode .row1, body.dark-mode .row2 {
+            background-color: #555;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            border-color: #666;
+            outline: none;
+        }
+
+        #themeToggle {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #333;
+            color: #f4f4f9;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #themeToggle.dark-mode {
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        footer {
+            background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .name {
+                font-size: 1.2em;
+            }
+            #searchInput {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .name {
+                font-size: 1em;
+            }
+            #searchInput {
+                max-width: 200px;
+            }
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            #themeToggle {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+        a{
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="most">AI Health Assistant</div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search tools..." oninput="filterCards()">
+        <button id="themeToggle" onclick="toggleTheme()">Switch to Dark Mode</button>
+    </div>
+
+    <div class="main" id="toolList">
+        <div class="row1">
+            <div class="name"><a href="BMI.html" target="_blank">BMI Calculator</a></div>
+            <hr>
+            <div class="card-details">
+                <img src="Image/bmi.jpeg" alt="BMI Calculator" style="width: 100%; border-radius: 10px; height: 150px;">
+                <p><strong>Description:</strong> Calculate your Body Mass Index (BMI) based on your weight and height.</p>
+                <p><strong>Benefits:</strong> Helps monitor your weight and assess if you are underweight, normal, or overweight.</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name"><a href="calorie intake.html" target="_blank">Calorie Intake</a></div>
+            <hr>
+            <div class="card-details">
+                <img src="Image/Calorie-Intake.png" alt="Calorie Intake" style="width: 100%; border-radius: 10px; height: 150px;">
+                <p><strong>Description:</strong> Estimate the number of calories your body needs daily based on your activity level.</p>
+                <p><strong>Benefits:</strong> Helps maintain a healthy diet by tracking your daily calorie intake.</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name"><a href="mental health.html" target="_blank">Mental Health</a></div>
+            <hr>
+            <div class="card-details">
+                <img src="Image/Mental Health.png" alt="Mental Health" style="width: 100%; border-radius: 10px; height: 150px;">
+                <p><strong>Description:</strong> Assess your mental well-being and get advice for managing stress and anxiety.</p>
+                <p><strong>Benefits:</strong> Helps you stay mentally balanced and cope with challenges.</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name"><a href="sleep quality.html" target="_blank">Sleep Quality Checker</a></div>
+            <hr>
+            <div class="card-details">
+                <img src="Image/sleep.png" alt="Sleep Quality Checker" style="width: 100%; border-radius: 10px; height: 150px;">
+                <p><strong>Description:</strong> Check the quality of your sleep and get recommendations for improvement.</p>
+                <p><strong>Benefits:</strong> Helps improve your overall health by ensuring adequate and quality sleep.</p>
+            </div>
+        </div>
+
+        <div class="row1">
+            <div class="name"><a href="water intake.html" target="_blank">Water Intake</a></div>
+            <hr>
+            <div class="card-details">
+                <img src="Image/water.jpg" alt="Water Intake" style="width: 100%; border-radius: 10px; height: 150px;">
+                <p><strong>Description:</strong> Track your daily water consumption to ensure proper hydration.</p>
+                <p><strong>Benefits:</strong> Helps maintain healthy hydration levels throughout the day.</p>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <script>
+        // Function to filter AI Health tools based on search input
+        function filterCards() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const tools = document.querySelectorAll('.row1, .row2');
+            tools.forEach(tool => {
+                if (tool.textContent.toLowerCase().includes(query)) {
+                    tool.style.display = 'block';
+                } else {
+                    tool.style.display = 'none';
+                }
+            });
+        }
+
+        // Function to toggle dark/light mode
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.classList.toggle('dark-mode');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        }
+    </script>
+</body>
+</html>
